@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppStateInterface } from 'src/app/shared/types/appState.interface';
 import { registerAction } from '../../store/actions/register.action';
+import { isSubmittingSelector } from '../../store/selectors';
 
 @Component({
   selector: 'mc-register',
@@ -14,13 +17,19 @@ export class RegisterComponent implements OnInit {
     email: '',
     password: '',
   });
+  isSubmitting$?: Observable<boolean>
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(private fb: FormBuilder, private store: Store<AppStateInterface>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.initializeValues();
+  }
+
+  initializeValues() {
+    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector));
+  }
 
   onSubmit(): void {
-    console.log(this.form.value);
     this.store.dispatch(registerAction(this.form.value));
   }
 }
