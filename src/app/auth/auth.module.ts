@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 
 import { RegisterComponent } from './components/register/register.component';
 import { authReducer } from './store/reducers';
+import { AuthService } from './services/auth.service';
 
 const routes: Routes = [
   {
@@ -22,5 +23,6 @@ const routes: Routes = [
     StoreModule.forFeature('auth', authReducer),
   ],
   declarations: [RegisterComponent],
+  providers: [AuthService],
 })
 export class AuthModule {}
