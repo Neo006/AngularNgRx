@@ -34,7 +34,7 @@ import { AuthInterceptor } from './shared/services/authinterceptor.service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true,
+      multi: true
     },
   ],
   bootstrap: [AppComponent],
